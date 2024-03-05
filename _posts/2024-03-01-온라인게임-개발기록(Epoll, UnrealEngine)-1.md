@@ -71,26 +71,16 @@ epoll_wait(_epollFd, _epollEvents, MAX_CLIENT, TIMEOUT); // _epollEvents 2번째
 
 현재 서버에서는 <[Dispatch()](https://github.com/qornwh/BSGameServer/blob/6cc18c87e9192adb951f1a2c0836b0ee7ca4180d/CoreLib/Service.cpp#L86)> 함수를 이용해서 매시간 epoll_wait을 호출하고 있다.
 
-### 패킷 구성
-
-패킷은 패킷 헤더 + 패킷 내용으로 구성된다. 패킷 헤더에는 id(2byte) + 패킷 크기(2byte)로 구성되고 패킷 내용에는 이동, 채팅, 공격 메시지에 대한 내용이 담겨있다.
-
-```cpp
-struct PacketHeader
-{
-	uint16 id;
-	uint16 size;
-};
-```
-
-### 패킷 Read
-
-![ReadBuffer](/images/ReadBuffer.png)
-먼저 Tcp로 통신하게 되므로 패킷이 오는 순서는 보장되어 있지만, 중간이 나눠져서 올 수 있다. 예를들면 다음과 같다. ex) 클라 50보냄 => 서버 25받음, 서버 25받음.이런식으로 데이터를 받을경우 buffer에 데이터를 쌓아둔뒤에 패킷 크기만큼 읽어서 처리한다.
-
 ### lock 구현
 
 read write lock을 구현하기위해 원자성으로 작동되는 compare_exchange_strong함수를 사용했다. 방금 atomic변수에서 가져온 현재 atomic변수값이 같은지확인후 같으면 예측되는 값으로 변경하고 아니면 lock 실패로 스핀락으로 구현했다. 여기서 나오는 `원자성`이라는 말은 visualStudio에서 어셈블리어로 보면 대입(=)과 같은 코드는 어셈블리 명령이 1개지만, 덧셈, 뻴셈등은 어셈블리로 보았을때 명령이 여러개로 나타나므로, 멀티스레드 contextSwitch에서 공유자원이 안전하게 동작되지 않는다.
+
+ReadLock, WriteLock 구현은 readLock을 잡은경우에는 read-read-read로 읽기만 하는 경우는 계속 잡을수 있도록 구현했고, writeLock을 잡은경우에는 읽기만 가능하고 모든 readLock이 풀려야 writeLock을 풀도록 만들었다.
+
+- read -> wirte (x)
+- write -> read (o)
+
+![lock](/images/lock.png)
 
 ReadLockGuard, WriteLockGuard을 구현하는데 생성자가 소멸될때 락이 해지되도록 RAII패턴으로 구현했다.
 
@@ -110,7 +100,6 @@ private:
   ReadLockGuard read(lock, "read"); // 락 잡음 여기서는 안전함.
 }
 // 코드 범위를 벗어나면 ReadLockGuard 생성자가 소멸될때 락도 해제됨!!
-
 ```
 
 `마지막으로 lock을 CAS로 스핀락을 구현했지만, 완벽하게 차단되는지는 제대로된 테스트가 필요할거 같다.`

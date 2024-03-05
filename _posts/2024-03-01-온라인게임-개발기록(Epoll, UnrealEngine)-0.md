@@ -1,5 +1,5 @@
 ---
-title: 온라인게임 개발기록(Epoll, UnrealEngine)
+title: 온라인게임 개발기록(Epoll, UnrealEngine)-0
 author: bjs
 date: 2024-03-01 00:00:00 +0800
 categories: [Blogging, Portfolio]
@@ -25,6 +25,6 @@ _클라이언트구조 간략도_
 ## 게임 서비스 제작및 구현
 
 1. [**Epoll을 이용한 소켓 통신**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-1>)
-2. 게임 패킷 구현
-3. 언리얼 엔진에서의 소켓 통신
-4. 게임 룸 구현
+2. [**게임 패킷 구현**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-2>)
+3. 게임 룸 구현
+4. 언리얼 엔진에서의 소켓 통신
