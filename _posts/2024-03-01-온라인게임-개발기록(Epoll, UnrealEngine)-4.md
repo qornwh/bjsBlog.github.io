@@ -183,9 +183,11 @@ int32 AMyFSocketActor::SendMessage(uint8* ptr, int32 count)
 
 ### 멀티 이동및 채팅
 
-### 공격및 히트
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VVc93B7wO2o" frameborder="0" allowfullscreen></iframe>
 
-### 몬스터 타겟이동및 공격
+### 공격및 히트, 몬스터 타겟이동및 공격
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/na8ZjzI547o" frameborder="0" allowfullscreen></iframe>
 
 ### 전체 영상
 
