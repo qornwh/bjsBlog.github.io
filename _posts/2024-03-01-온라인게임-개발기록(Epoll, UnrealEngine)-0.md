@@ -25,6 +25,6 @@ _클라이언트구조 간략도_
 ## 게임 서비스 제작및 구현
 
 1. [**Epoll을 이용한 소켓 통신**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-1>)
-2. [**게임 패킷 구현**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-2>)
-3. 게임 룸 구현
-4. 언리얼 엔진에서의 소켓 통신
+2. [**게임 패킷 구현 및 멀티 스레드**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-2>)
+3. [**게임 기능 구현**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-3>)
+4. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-4>)
