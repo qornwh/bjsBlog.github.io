@@ -80,7 +80,7 @@ ReadLock, WriteLock 구현은 readLock을 잡은경우에는 read-read-read로 �
 - read -> wirte (x)
 - write -> read (o)
 
-![lock](/images/lock.png)
+![lock](/assets/img/lock.png)
 
 ReadLockGuard, WriteLockGuard을 구현하는데 생성자가 소멸될때 락이 해지되도록 RAII패턴으로 구현했다.
 
@@ -107,7 +107,7 @@ private:
 ### JobQueue 구성
 
 JobQueue은 멀티스레드 환경에서 contextSwitch되면 공유자원을 침범하는 하게 된다. 이를 방어하기 위해서. JobQueue는 push, execute될때 Lock을 사용해 생성자소비자 패턴처럼 작성되어 있다. 나중에 나올 Room(JobQueue상속)에서 사용된다.
-![JobQueue](/images/JobQueue.png)
+![JobQueue](/assets/img/JobQueue.png)
 
 ```cpp
 using Func = std::function<void()>;
