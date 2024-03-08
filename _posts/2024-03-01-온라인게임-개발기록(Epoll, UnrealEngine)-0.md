@@ -10,7 +10,7 @@ tags: [온라인게임 개발기록, epoll, unreal]
 
 ## 게임 서비스 구조 - 서버(리눅스 Epoll)
 
-<!-- ![서버구조](/assets/img/epoll_unreal_서버구조.png) -->
+![서버구조](/assets/img/epoll_unreal_서버구조.png)
 
 _서버구조 간략도_
 
@@ -18,7 +18,7 @@ _서버구조 간략도_
 
 ## 게임 서비스 구조 - 클라이언트(언리얼 엔진)
 
-<!-- ![클라구조](/assets/img/epoll_unreal_클라구조.png) -->
+![클라구조](/assets/img/epoll_unreal_클라구조.png)
 
 _클라이언트구조 간략도_
 

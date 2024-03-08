@@ -10,7 +10,7 @@ tags: [온라인게임 개발기록, epoll, unreal]
 
 ## 게임 서비스
 
-<!-- ![GameService](/assets/img/GameService.png) -->
+![GameService](/assets/img/GameService.png)
 
 _GameService_
 Service : 게임서버,
@@ -260,14 +260,14 @@ static SendBufferRef MakeSendBuffer(uint16 dataSize, uint16 pktId)
 
 ### 게임 맵 구현
 
-<!-- ![GameMap](/assets/img/GameMap.png){: width="300" height="400"} -->
+![GameMap](/assets/img/GameMap.png){: width="300" height="400"}
 
 _GameMap_
 게임 룸을 구현하기 먼저 맵의 크기가 필요하다. 맵의 크기가 있어야 몬스터들이 이동할때 맵을 나가지 않도록 만들 필요가 있다. 맵은 전체크기와 몬스터가 이동할수 있는 구역을 빨간색 구역을 나누었다. 단 게임 맵 안에 벽은 없다.
 
 ### GameRoom 구현
 
-<!-- ![GameRoom](/assets/img/GameRoom.png){: width="400" height="250"} -->
+![GameRoom](/assets/img/GameRoom.png){: width="400" height="250"}
 
 _GameRoom_
 위 그림처럼 각 던전에서는 다른 던전의 몬스터 플레이어는 확인하지 않고, 각 룸에서 공격 이동등은 던전에 포함된 몬스터, 플레이어끼리 메시지를 주고 받는다. 즉 중요한점은 룸끼리는 각각 따로 작동된다.
@@ -304,7 +304,7 @@ static uint64 GetTickCount64_OS()
 
 target방향으로 이동하기 위해서는 2벡터 사이의 거리를 구해야된다. 아래 그림에서는 A를 대상으로 한다.
 
-<!-- ![2점사이](/assets/img/2점사이.png){: width="400" height="250"} -->
+![2점사이](/assets/img/2점사이.png){: width="400" height="250"}
 
 2 벡터 간의 각도를 계산하기 위해 다음처럼 구현했다.
 
