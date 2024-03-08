@@ -48,7 +48,8 @@ void UMyGameInstance::ConnectClientSocket()
 ### 클라이언트 소켓 Recv
 
 클라이언트의 소켓에 관한 모든 함수는 `MyFSocketAcotr`에 있다. 이 액터를 맵에 넣어서 tick이 돌때마다 읽기를 수행하는 방식으로 구현했다.
-![FSocket실행](/assets/img/FSocket실행.png)
+
+<!-- ![FSocket실행](/assets/img/FSocket실행.png) -->
 
 `FSocket`의 `Wait`함수로 `ESocketWaitConditions::WaitForRead` 매개변수로두고 1초동안 읽어야할 데이터가 있으면 Recv함수가 호출되고, 서버와 마찬가지로 buffer에 읽을 byte배열을 두고 `FPacketHeader`, `ReadMessageHandler` 패킷헤더와 패킷을 분석하는 방식으로 구현했다.
 
