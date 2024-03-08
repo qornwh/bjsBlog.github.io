@@ -3,7 +3,7 @@ title: 온라인게임 개발기록(Epoll, UnrealEngine)-4
 author: bjs
 date: 2024-03-01 00:00:00 +0800
 categories: [Blogging, Portfolio]
-tags: [온라인게임 개발기록, epoll, unreal]
+tags: [온라인게임 개발기록, unreal]
 ---
 
 # 언리얼 엔진에서의 소켓 통신및 플레이 영상
@@ -180,6 +180,14 @@ int32 AMyFSocketActor::SendMessage(uint8* ptr, int32 count)
 }
 ```
 
+## 게임 클라이언트 구현 간단 정리
+
+* 게임캐릭터 클래스로 플레이어(자신), 플레이어(다른 유저) 몬스터 구현
+* 애니메이션은 애니메이션몽타주 이용, 공격시 나가는 이펙트는 전용 Object(투사체) 구현
+* 메인위젯 구현, 채팅바, 이름
+* 게임 캐릭터 선택창 구현
+* 클라이언트 통신은 위와 같음
+
 ## 게임 플레이 영상
 
 ### 멀티 이동및 채팅
@@ -191,5 +199,8 @@ int32 AMyFSocketActor::SendMessage(uint8* ptr, int32 count)
 <iframe width="560" height="315" src="https://www.youtube.com/embed/na8ZjzI547o" frameborder="0" allowfullscreen></iframe>
 
 ### 전체 영상
+
+<iframe width="800" height="315" src="https://www.youtube.com/embed/1Tl1qE1I2iI" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hrNi9d3bETc" frameborder="0" allowfullscreen></iframe>
 
 [**게임 클라이언트 코드 참조**](https://github.com/qornwh/BSGameClientUE5/tree/main)
