@@ -3,7 +3,7 @@ title: 온라인게임 개발기록(Epoll, UnrealEngine)-1
 author: bjs
 date: 2024-03-01 00:00:00 +0800
 categories: [Blogging, Portfolio]
-tags: [온라인게임 개발기록, epoll, unreal]
+tags: [온라인게임 개발기록, epoll, unreal, server, c++]
 ---
 
 # Epoll을 이용한 소켓 통신

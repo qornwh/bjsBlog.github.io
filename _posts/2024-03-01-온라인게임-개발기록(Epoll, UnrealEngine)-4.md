@@ -3,7 +3,7 @@ title: 온라인게임 개발기록(Epoll, UnrealEngine)-4
 author: bjs
 date: 2024-03-01 00:00:00 +0800
 categories: [Blogging, Portfolio]
-tags: [온라인게임 개발기록, unreal]
+tags: [온라인게임 개발기록, unreal, server, c++]
 ---
 
 # 언리얼 엔진에서의 소켓 통신및 플레이 영상
@@ -187,6 +187,8 @@ int32 AMyFSocketActor::SendMessage(uint8* ptr, int32 count)
 * 메인위젯 구현, 채팅바, 이름
 * 게임 캐릭터 선택창 구현
 * 클라이언트 통신은 위와 같음
+* 플레이어 이동은 0.2초마다 한번씩 패킷 전달 하는 방향으로 구현
+* 몬스터의 이동시 움직이는 방향은 클라이언트에서 처리되도록 구현
 
 ## 게임 플레이 영상
 

@@ -3,7 +3,7 @@ title: 온라인게임 개발기록(Epoll, UnrealEngine)-0
 author: bjs
 date: 2024-03-01 00:00:00 +0800
 categories: [Blogging, Portfolio]
-tags: [온라인게임 개발기록, epoll, unreal]
+tags: [온라인게임 개발기록, epoll, unreal, server, c++]
 ---
 
 # 리눅스의 Epoll과 언리얼 엔진으로 온라인 게임 개발
@@ -30,3 +30,5 @@ _클라이언트구조 간략도_
 2. [**게임 패킷 구현 및 멀티 스레드**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-2>)
 3. [**게임 기능 구현**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-3>)
 4. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-4>)
+
+해당문서는 `Rookiss님의 https://www.inflearn.com/course/%EC%96%B8%EB%A6%AC%EC%96%BC-3d-mmorpg-4/dashboard' 강좌를 듣고 난 후 개발되었습니다.
