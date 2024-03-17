@@ -7,8 +7,10 @@ tags: [온라인게임 개발기록, epoll, unreal, server, c++]
 ---
 
 # Epoll을 이용한 소켓 통신
+---
 
 ## 서버에서의 소켓 설정
+---
 
 온라인 게임서버에서의 통신은 실시간으로 이뤄져야 된다. 실시간으로 통신할려고 하면 Socket을 non-block으로 설정하고, epoll의 수신데이터가 버퍼에 쌓이면 한번만 감지 해서 알려주면 되기 때문에 '에지 트리거' 모드로 설정할 필요가 있다.
 
@@ -51,6 +53,7 @@ bool EpollFD::Register(int socketFd)
 위 함수는 소켓에 epoll 모드로 설정하는 코드이다. epoll_event로 \_epollFd에 설정후에 epoll_ctl 함수로 소켓을 등록하는 코드이다.
 
 ## 서버 클라이언트 통신
+---
 
 **서버의 전체적인 통신 과정이다.**
 
@@ -62,6 +65,7 @@ bool EpollFD::Register(int socketFd)
 6. Service, Session, Job등 동적할당으로 객체를 생성은 std::shared_ptr로 작성됨.
 
 ### 서버 소켓 감지
+---
 
 서버에서는 소켓을 epoll_wait함수로 connect, read, disconnect를 감지하게된다. epoll_wait함수로 select모델과 달리 감지가 일어나게된 소켓들만 fd를 가져올수 있게된다.
 
@@ -72,27 +76,42 @@ epoll_wait(_epollFd, _epollEvents, MAX_CLIENT, TIMEOUT); // _epollEvents 2번째
 현재 서버에서는 <[Dispatch()](https://github.com/qornwh/BSGameServer/blob/6cc18c87e9192adb951f1a2c0836b0ee7ca4180d/CoreLib/Service.cpp#L86)> 함수를 이용해서 매시간 epoll_wait을 호출하고 있다.
 
 ### lock 구현
+---
 
-read write lock을 구현하기위해 원자성으로 작동되는 compare_exchange_strong함수를 사용했다. 방금 atomic변수에서 가져온 현재 atomic변수값이 같은지확인후 같으면 예측되는 값으로 변경하고 아니면 lock 실패로 스핀락으로 구현했다. 여기서 나오는 `원자성`이라는 말은 visualStudio에서 어셈블리어로 보면 대입(=)과 같은 코드는 어셈블리 명령이 1개지만, 덧셈, 뻴셈등은 어셈블리로 보았을때 명령이 여러개로 나타나므로, 멀티스레드 contextSwitch에서 공유자원이 안전하게 동작되지 않는다.
+read write lock을 구현하기위해 read write을 제공하는 pthread_rwlock_init을 사용하여 구현했다. pthread_rwlock_tryrdlock, pthread_rwlock_trywrlock으로 lock 체크후에 write read로 lock 한뒤 unlock으로 구현했다. 추가로 일정 이상 lock 흭득을 못하면 다른 스레드에게 넘기는 방법으로 구현했다.
 
-ReadLock, WriteLock 구현은 readLock을 잡은경우에는 read-read-read로 읽기만 하는 경우는 계속 잡을수 있도록 구현했고, writeLock을 잡은경우에는 읽기만 가능하고 모든 readLock이 풀려야 writeLock을 풀도록 만들었다.
+```cpp
+void Lock::ReadLock()
+{
+  while (true)
+  {
+    for (int i = 0; i < MAX_SPIN_COUNT; i++) // MAX_SPIN_COUNT  == 500번 동안 못잡으면 다른 스레드에게 넘긴다
+    {
+      if (pthread_rwlock_tryrdlock(&rwlock) == 0)
+      {
+        pthread_rwlock_rdlock(&rwlock);
+        return;
+      }
+    }
+    this_thread::yield();
+  }
+}
 
-- read -> wirte (x)
-- write -> read (o)
-
-![lock](/assets/img/lock.png)
+```
 
 ReadLockGuard, WriteLockGuard을 구현하는데 생성자가 소멸될때 락이 해지되도록 RAII패턴으로 구현했다.
+
+_그러나 Epoll이 멀티스레드에서 잘안되는 느낌이다 recv할때 그냥 -1이 리턴되는 이상한 현상이 있다._
 
 ```cpp
 class ReadLockGuard
 {
 public:
-	ReadLockGuard(Lock& lock, const char* name) : _lock(lock), _name(name) { _lock.ReadLock(); }
-	~ReadLockGuard() { _lock.ReadUnLock(); }
+  ReadLockGuard(Lock& lock, const char* name) : _lock(lock), _name(name) { _lock.ReadLock(); }
+  ~ReadLockGuard() { _lock.ReadUnLock(); }
 private:
-	Lock& _lock;
-	const char* _name;
+  Lock& _lock;
+  const char* _name;
 };
 
 // 사용
@@ -102,9 +121,8 @@ private:
 // 코드 범위를 벗어나면 ReadLockGuard 생성자가 소멸될때 락도 해제됨!!
 ```
 
-`마지막으로 lock을 CAS로 스핀락을 구현했지만, 완벽하게 차단되는지는 제대로된 테스트가 필요할거 같다.`
-
 ### JobQueue 구성
+---
 
 JobQueue은 멀티스레드 환경에서 contextSwitch되면 공유자원을 침범하는 하게 된다. 이를 방어하기 위해서. JobQueue는 push, execute될때 Lock을 사용해 생성자소비자 패턴처럼 작성되어 있다. 나중에 나올 Room(JobQueue상속)에서 사용된다.
 
@@ -148,3 +166,11 @@ private:
 위 클래스가 Job이 구현된 코드이다. 첫번째 Job생성자는 function의 파라미터가 없고 해당되는 shared_ptr을 파라미터로 가지고, 두번째 Job 생성자는 function의 파라미터가 추가된 모습이다.
 
 [**네트워크 라이브러리 코드 CoreLib폴더 참조**](https://github.com/qornwh/BSGameServer/tree/main/CoreLib)
+
+## 게임 서비스 제작및 구현
+---
+
+1. [**Epoll을 이용한 소켓 통신**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-1>)
+2. [**게임 패킷 구현 및 멀티 스레드**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-2>)
+3. [**게임 기능 구현**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-3>)
+4. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-4>)

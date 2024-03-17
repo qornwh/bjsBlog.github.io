@@ -7,8 +7,10 @@ tags: [온라인게임 개발기록, epoll, unreal, server, c++]
 ---
 
 # 게임 기능 구현
+---
 
 ## 게임 서비스
+---
 
 ![GameService](/assets/img/GameService.png)
 
@@ -32,6 +34,7 @@ Session : 게임 클라이언트의 정보
    4. 몬스터의 상태 GameRoom의 Session별로 BroadCast
 
 ### 게임 멀티 스레드
+---
 
 ```cpp
 void RunTask(BS_GameServerServiceRef serverRef)
@@ -61,6 +64,7 @@ int main()
 main 함수에서 io와 GameRoom task를 처리할 스레드를 만들고, 메인스레드와 다른스레드 모두 같은 작업을 진행한다.
 
 ### 게임 서비스 Dispatch
+---
 
 ```cpp
 void ServerService::Dispatch()
@@ -116,6 +120,7 @@ protected:
 Dispatch 함수에서 서버와 클라이언트를 Accept와 Read를 작동하게 된다. 함수를 보게되면 i 인덱스를 파라미터로 받게 되는데 저 i인덱스는 서버소켓의 `_epoll_event`로 받아온 socket 리스트이다. 추가적으로 `멀티스레드 이슈`로 read할때 epoll에 버퍼가 차있으면 1번 읽을수 있을때까지 신호가 있는데 아직 `recv`함수를 호출하지 않은 상태이면 동시에 접근이 가능해서 CAS로 동시접근이 되지 않도록 처리했다.
 
 ### 게임 서비스 RecvMessage
+---
 
 ```cpp
 bool Session::ReciveMessage()
@@ -206,6 +211,7 @@ BYTE *PacketUtils::ReadBufferStr(BYTE *buffer, int &offset, uint32 len)
 `HandlePacket`함수는 실제 `buffer` 주소 위치를 참조해서 읽어내는데 읽게 도와주는게 `ReadBufferPtr, ReadBufferStr` 함수다. 2함수 모두 시작위치 주소를 리턴으로 넘기고, offset이 size만큼 더하므로써 다음위치를 바라보도록 구현했다.
 
 ### 게임 패킷 핸들러 구현
+---
 
 이제 실제 게임에서 보내는 패킷을 구성하는 부분은 `BS_PacketHandler`와 `BS_Packet`이다. `BS_Packet`에 보낼 패킷에 어떤내용들을 보낼지 구성되어 있다.
 
@@ -259,6 +265,7 @@ static SendBufferRef MakeSendBuffer(uint16 dataSize, uint16 pktId)
 ```
 
 ### 게임 맵 구현
+---
 
 ![GameMap](/assets/img/GameMap.png){: width="300" height="400"}
 
@@ -266,6 +273,7 @@ _GameMap_
 게임 룸을 구현하기 먼저 맵의 크기가 필요하다. 맵의 크기가 있어야 몬스터들이 이동할때 맵을 나가지 않도록 만들 필요가 있다. 맵은 전체크기와 몬스터가 이동할수 있는 구역을 빨간색 구역을 나누었다. 단 게임 맵 안에 벽은 없다.
 
 ### GameRoom 구현
+---
 
 ![GameRoom](/assets/img/GameRoom.png){: width="400" height="250"}
 
@@ -275,6 +283,7 @@ _GameRoom_
 그래서 `GameRoom`은 `JobQueue`를 상속받고, 현재 필드의 몬스터 정보, 일정시간마다 한번씩 발생하는 `tick`함수, `GameMap`정보, 등으로 구성했다.
 
 ### GameRoom Tick 함수구현
+---
 
 리눅스에 시스템이 경과된 시간을 가져오는 함수가 없어서 구현해서 사용했다. `timespec`는 초와 나노초 단위를 기록하고, `clock_gettime`함수로 수행시간을 측정한다.
 
@@ -290,6 +299,7 @@ static uint64 GetTickCount64_OS()
 ```
 
 ### GameRoom 몬스터 구현
+---
 
 몬스터와 플레이어에 대한 정보는 `BS_Player`클래스에 정의되어 있다.
 몬스터 행동처리는 다음과 같이 구현했다.
@@ -301,6 +311,7 @@ static uint64 GetTickCount64_OS()
 5. 리스폰 : 몬스터 체력이 0이 되면 사망처리 및 사망 `packet`을 모든 클라이언트들에게 보내고, 다시 Tick함수가될때 사망처리된 몬스터들은 모두 리스폰시키고, `packet`을 모든 클라이언트들에게 보낸다.
 
 ### target(player)로 이동
+---
 
 target방향으로 이동하기 위해서는 2벡터 사이의 거리를 구해야된다. 아래 그림에서는 A를 대상으로 한다.
 
@@ -375,3 +386,11 @@ static float calculateAngle(float x1, float y1, float x2, float y2)
 ```
 
 [**게임 서비스 코드 GameBS폴더 참조**](https://github.com/qornwh/BSGameServer/tree/main/GameBS)
+
+## 게임 서비스 제작및 구현
+---
+
+1. [**Epoll을 이용한 소켓 통신**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-1>)
+2. [**게임 패킷 구현 및 멀티 스레드**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-2>)
+3. [**게임 기능 구현**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-3>)
+4. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-4>)
