@@ -28,7 +28,7 @@ tags: [온라인게임 개발기록, unreal, server, c++]
 ### 클라이언트 소켓 연결
 ---
 
-언리얼엔진에서 제공되는 `FSocket`을 이용하였고 논블로킹, 동기 방식으로 구현했다. 사실 동기 방식이지만 `FSocket.Wait` 함수로 읽어야할 데이터가 있으면 `Recv`함수를 호출하기는 한다. 연결 코드는 다음과 같다(`_clientSocket`변수가 `FSocket`이다).
+언리얼엔진에서 제공되는 `FSocket`을 이용하였고 논블로킹, 동기 방식으로 구현. 사실 동기 방식이지만 `FSocket.Wait` 함수로 읽어야할 데이터가 있으면 `Recv`함수를 호출하기는 한다. 연결 코드는 다음과 같다(`_clientSocket`변수가 `FSocket`이다).
 
 ```cpp
 void UMyGameInstance::ConnectClientSocket()
@@ -52,11 +52,11 @@ void UMyGameInstance::ConnectClientSocket()
 ### 클라이언트 소켓 Recv
 ---
 
-클라이언트의 소켓에 관한 모든 함수는 `MyFSocketAcotr`에 있다. 이 액터를 맵에 넣어서 tick이 돌때마다 읽기를 수행하는 방식으로 구현했다.
+클라이언트의 소켓에 관한 모든 함수는 `MyFSocketAcotr`에 있다. 이 액터를 맵에 넣어서 tick이 돌때마다 읽기를 수행하는 방식으로 구현.
 
 ![FSocket실행](/assets/img/FSocket실행.png)
 
-`FSocket`의 `Wait`함수로 `ESocketWaitConditions::WaitForRead` 매개변수로두고 1초동안 읽어야할 데이터가 있으면 Recv함수가 호출되고, 서버와 마찬가지로 buffer에 읽을 byte배열을 두고 `FPacketHeader`, `ReadMessageHandler` 패킷헤더와 패킷을 분석하는 방식으로 구현했다.
+`FSocket`의 `Wait`함수로 `ESocketWaitConditions::WaitForRead` 매개변수로두고 1초동안 읽어야할 데이터가 있으면 Recv함수가 호출되고, 서버와 마찬가지로 buffer에 읽을 byte배열을 두고 `FPacketHeader`, `ReadMessageHandler` 패킷헤더와 패킷을 분석하는 방식으로 구현.
 
 ```cpp
 void AMyFSocketActor::Tick(float DeltaTime)
@@ -99,7 +99,7 @@ void AMyFSocketActor::Tick(float DeltaTime)
 }
 ```
 
-패킷을 읽어주는 함수로 `ReadBufferPtr`와 `ReadBufferStr16`문자열(이름, 채팅)을 도와주는 함수를 구현했다. char이 아닌 tchar인 이유는 언리얼에서 유니코드(UTF-16)으로 되어 있어서 tchar을 선택했다.
+패킷을 읽어주는 함수로 `ReadBufferPtr`와 `ReadBufferStr16`문자열(이름, 채팅)을 도와주는 함수를 구현. char이 아닌 tchar인 이유는 언리얼에서 유니코드(UTF-16)으로 되어 있어서 tchar을 선택했다.
 
 ```cpp
 template <typename T>
@@ -125,7 +125,7 @@ FString AMyFSocketActor::ReadBufferStr16(uint8* buffer, int& ptr, int32 len)
 
 이제 실제 서버로 보내는 패킷을 구성하는 부분은 `FPacketHandler`와 `Protocol/P_PROTOCOL_PAKCET`이다.
 
-채팅 메시지 패킷경우 다음처럼 구현했다. Type(일반 0), TextLen(텍스트 길이), Text(Fstring 채팅메시지)
+채팅 메시지 패킷경우 다음처럼 구현. Type(일반 0), TextLen(텍스트 길이), Text(Fstring 채팅메시지)
 
 ```cpp
 struct P_CHAT_PACKET
@@ -141,7 +141,7 @@ struct P_CHAT_PACKET
 };
 ```
 
-실제 패킷을 만들어서 보내는 코드는 다음과 같다. 언리얼의 `FBufferArchive`을 이용해서 버퍼를 할당하고, `MakePacket`함수가 보내는 패킷 buffer에 데이터를 입력해준다. 채팅 패킷은 다음처럼 구현했다.
+실제 패킷을 만들어서 보내는 코드는 다음과 같다. 언리얼의 `FBufferArchive`을 이용해서 버퍼를 할당하고, `MakePacket`함수가 보내는 패킷 buffer에 데이터를 입력해준다. 채팅 패킷은 다음처럼 구현.
 
 ```cpp
 uint8* FPacketHandler::MakePacket(P_CHAT_PACKET& pkt, FBufferArchive& Ar)

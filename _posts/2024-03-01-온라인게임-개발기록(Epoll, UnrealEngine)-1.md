@@ -78,7 +78,7 @@ epoll_wait(_epollFd, _epollEvents, MAX_CLIENT, TIMEOUT); // _epollEvents 2번째
 ### lock 구현
 ---
 
-read write lock을 구현하기위해 read write을 제공하는 pthread_rwlock_init을 사용하여 구현했다. pthread_rwlock_tryrdlock, pthread_rwlock_trywrlock으로 lock 체크후에 write read로 lock 한뒤 unlock으로 구현했다. 추가로 일정 이상 lock 흭득을 못하면 다른 스레드에게 넘기는 방법으로 구현했다.
+read write lock을 구현하기위해 read write을 제공하는 pthread_rwlock_init을 사용하여 구현. pthread_rwlock_tryrdlock, pthread_rwlock_trywrlock으로 lock 체크후에 write read로 lock 한뒤 unlock으로 구현. 추가로 일정 이상 lock 흭득을 못하면 다른 스레드에게 넘기는 방법으로 구현.
 
 ```cpp
 void Lock::ReadLock()
@@ -99,7 +99,7 @@ void Lock::ReadLock()
 
 ```
 
-ReadLockGuard, WriteLockGuard을 구현하는데 생성자가 소멸될때 락이 해지되도록 RAII패턴으로 구현했다.
+ReadLockGuard, WriteLockGuard을 구현하는데 생성자가 소멸될때 락이 해지되도록 RAII패턴으로 구현.
 
 _그러나 Epoll이 멀티스레드에서 잘안되는 느낌이다 recv할때 그냥 -1이 리턴되는 이상한 현상이 있다._
 

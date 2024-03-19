@@ -20,7 +20,7 @@ _GameService_
 Service : 게임서버,
 Session : 게임 클라이언트의 정보
 
-**게임 서비스는 다음처럼 작동되도록 구현했다.**
+**게임 서비스는 다음처럼 작동되도록 구현**
 
 1. Serivce 초기화
 2. 필요한만큼 스레드 생성
@@ -216,7 +216,7 @@ BYTE *PacketUtils::ReadBufferStr(BYTE *buffer, int &offset, uint32 len)
 }
 ```
 
-`HandlePacket`함수는 실제 `buffer` 주소 위치를 참조해서 읽어내는데 읽게 도와주는게 `ReadBufferPtr, ReadBufferStr` 함수다. 2함수 모두 시작위치 주소를 리턴으로 넘기고, offset이 size만큼 더하므로써 다음위치를 바라보도록 구현했다.
+`HandlePacket`함수는 실제 `buffer` 주소 위치를 참조해서 읽어내는데 읽게 도와주는게 `ReadBufferPtr, ReadBufferStr` 함수다. 2함수 모두 시작위치 주소를 리턴으로 넘기고, offset이 size만큼 더하므로써 다음위치를 바라보도록 구현
 
 ### 게임 패킷 핸들러 구현
 
@@ -224,7 +224,7 @@ BYTE *PacketUtils::ReadBufferStr(BYTE *buffer, int &offset, uint32 len)
 
 이제 실제 게임에서 보내는 패킷을 구성하는 부분은 `BS_PacketHandler`와 `BS_Packet`이다. `BS_Packet`에 보낼 패킷에 어떤내용들을 보낼지 구성되어 있다.
 
-간단한 채팅 메시지인 경우 다음처럼 구현했다. 보내는 유저(Code), Type(일반 0), TextLen(텍스트 길이), Text(string 첫 주소)
+간단한 채팅 메시지인 경우 다음처럼 구현. 보내는 유저(Code), Type(일반 0), TextLen(텍스트 길이), Text(string 첫 주소)
 
 ```cpp
 struct BS_C_CHAT
@@ -315,7 +315,7 @@ static uint64 GetTickCount64_OS()
 ---
 
 몬스터와 플레이어에 대한 정보는 `BS_Player`클래스에 정의되어 있다.
-몬스터 행동처리는 다음과 같이 구현했다.
+몬스터 행동처리는 다음과 같이 구현
 
 1. 기본 이동 : 방향만 mt19937으로 난수생성으로 2초마다 한번 업데이트, `GameMap`범위를 나가진 않는다.
 2. 플레이어로 부터 피격 : 공격해야될 target(player)이 설정됨
@@ -331,7 +331,7 @@ target방향으로 이동하기 위해서는 2벡터 사이의 거리를 구해�
 
 ![2점사이](/assets/img/2점사이.png){: width="400" height="250"}
 
-2 벡터 간의 각도를 계산하기 위해 다음처럼 구현했다.
+2 벡터 간의 각도를 계산하기 위해 다음처럼 구현
 
 1. B벡터 - A벡터로 타겟방향으로 가는 벡터를 구함
 2. 정면벡터와 타겟벡터 내적을 한뒤 acos함수로 각도 `radian`구함.
@@ -339,7 +339,7 @@ target방향으로 이동하기 위해서는 2벡터 사이의 거리를 구해�
 4. 정면벡터와 타겟벡터를 외적한뒤 양수 음수 판단.
 5. 음수면 `angle`\* -1을 한다.
 
-실제 함수는 다음처럼 구현했다.
+실제 함수는 다음처럼 구현
 
 ```cpp
 // 벡터 내적 공식 사용
