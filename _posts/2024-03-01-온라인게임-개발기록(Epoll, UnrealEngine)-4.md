@@ -2,7 +2,7 @@
 title: 온라인게임 개발기록(Epoll, UnrealEngine)-4
 author: bjs
 date: 2024-03-01 00:00:00 +0800
-categories: [Blogging, Portfolio]
+categories: [Blogging, Portfolio2]
 tags: [온라인게임 개발기록, unreal, server, c++]
 ---
 
@@ -200,18 +200,10 @@ int32 AMyFSocketActor::SendMessage(uint8* ptr, int32 count)
 ## 게임 플레이 영상
 ---
 
-### 멀티 이동및 채팅
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/VVc93B7wO2o" frameborder="0" allowfullscreen></iframe>
-
-### 공격및 히트, 몬스터 타겟이동및 공격
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/na8ZjzI547o" frameborder="0" allowfullscreen></iframe>
-
 ### 전체 영상
 
-<iframe width="800" height="315" src="https://www.youtube.com/embed/1Tl1qE1I2iI" frameborder="0" allowfullscreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hrNi9d3bETc" frameborder="0" allowfullscreen></iframe>
+<iframe width="800" height="515" src="https://www.youtube.com/embed/NIEy5bpEhBk" frameborder="0" allowfullscreen></iframe>
+<iframe width="800" height="600" src="https://www.youtube.com/embed/ymCHGSQRh6s" frameborder="0" allowfullscreen></iframe>
 
 [**게임 클라이언트 코드 참조**](https://github.com/qornwh/BSGameClientUE5/tree/main)
 
