@@ -2,7 +2,7 @@
 title: 온라인게임 개발기록(Epoll, UnrealEngine)-0
 author: bjs
 date: 2024-03-01 00:00:00 +0800
-categories: [Blogging, Portfolio]
+categories: [Blogging, Portfolio2]
 tags: [온라인게임 개발기록, epoll, unreal, server, c++]
 ---
 
