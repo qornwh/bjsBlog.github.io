@@ -7,12 +7,15 @@ tags: [온라인게임 개발기록, unreal, server, c++]
 ---
 
 # 언리얼 엔진에서의 소켓 통신및 플레이 영상
+
 ---
 
 ## 언리얼 엔진에서의 소켓 통신
+
 ---
 
 ### 클라이언트 구조
+
 ---
 
 클라이언트 동작은 간단하게 구성했다.
@@ -26,6 +29,7 @@ tags: [온라인게임 개발기록, unreal, server, c++]
    3. 공격
 
 ### 클라이언트 소켓 연결
+
 ---
 
 언리얼엔진에서 제공되는 `FSocket`을 이용하였고 논블로킹, 동기 방식으로 구현. 사실 동기 방식이지만 `FSocket.Wait` 함수로 읽어야할 데이터가 있으면 `Recv`함수를 호출하기는 한다. 연결 코드는 다음과 같다(`_clientSocket`변수가 `FSocket`이다).
@@ -50,6 +54,7 @@ void UMyGameInstance::ConnectClientSocket()
 ```
 
 ### 클라이언트 소켓 Recv
+
 ---
 
 클라이언트의 소켓에 관한 모든 함수는 `MyFSocketAcotr`에 있다. 이 액터를 맵에 넣어서 tick이 돌때마다 읽기를 수행하는 방식으로 구현.
@@ -121,6 +126,7 @@ FString AMyFSocketActor::ReadBufferStr16(uint8* buffer, int& ptr, int32 len)
 ```
 
 ### 클라이언트 소켓 Packet Send
+
 ---
 
 이제 실제 서버로 보내는 패킷을 구성하는 부분은 `FPacketHandler`와 `Protocol/P_PROTOCOL_PAKCET`이다.
@@ -187,17 +193,19 @@ int32 AMyFSocketActor::SendMessage(uint8* ptr, int32 count)
 ```
 
 ## 게임 클라이언트 구현 간단 정리
+
 ---
 
-* 게임캐릭터 클래스로 플레이어(자신), 플레이어(다른 유저) 몬스터 구현
-* 애니메이션은 애니메이션몽타주 이용, 공격시 나가는 이펙트는 전용 Object(투사체) 구현
-* 메인위젯 구현, 채팅바, 이름
-* 게임 캐릭터 선택창 구현
-* 클라이언트 통신은 위와 같음
-* 플레이어 이동은 0.2초마다 한번씩 패킷 전달 하는 방향으로 구현
-* 몬스터의 이동시 움직이는 방향은 클라이언트에서 처리되도록 구현
+- 게임캐릭터 클래스로 플레이어(자신), 플레이어(다른 유저) 몬스터 구현
+- 애니메이션은 애니메이션몽타주 이용, 공격시 나가는 이펙트는 전용 Object(투사체) 구현
+- 메인위젯 구현, 채팅바, 이름
+- 게임 캐릭터 선택창 구현
+- 클라이언트 통신은 위와 같음
+- 플레이어 이동은 0.2초마다 한번씩 패킷 전달 하는 방향으로 구현
+- 몬스터의 이동시 움직이는 방향은 클라이언트에서 처리되도록 구현
 
 ## 게임 플레이 영상
+
 ---
 
 ### 전체 영상
@@ -208,10 +216,12 @@ int32 AMyFSocketActor::SendMessage(uint8* ptr, int32 count)
 [**게임 클라이언트 코드 참조**](https://github.com/qornwh/BSGameClientUE5/tree/main)
 
 ## 게임 서비스 제작및 구현
+
 ---
 
-1. [**Epoll을 이용한 소켓 통신**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-1>)
-2. [**게임 패킷 구현 및 멀티 스레드**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-2>)
-3. [**게임 기능 구현**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-3>)
-4. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-4>)
-5. [**vscode 설정, makefile**]()
+1. [**프로젝트 소개**](/posts/OnlineGame-EpollServer-0)
+2. [**Epoll을 이용한 소켓 통신**](/posts/OnlineGame-EpollServer-1)
+3. [**게임 패킷 구현 및 멀티 스레드**](/posts/OnlineGame-EpollServer-2)
+4. [**게임 기능 구현**](/posts/OnlineGame-EpollServer-3)
+5. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](/posts/OnlineGame-EpollServer-4)
+6. [**vscode 설정, makefile**](/posts/OnlineGame-EpollServer-5)

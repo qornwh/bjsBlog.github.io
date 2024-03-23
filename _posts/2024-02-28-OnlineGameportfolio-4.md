@@ -137,15 +137,16 @@ public static byte[] MakeHeaderPacketHandler(UInt16 pktId, UInt16 pktSize)
 
 `SocketComponent`는 `Scene`에 들어있다. 그래서 매 틱마다 한번씩 업데이트되며 그때 패킷을 저장해놓은 큐가 비어있지 않으면 pop한뒤 switch-case로 id별로 패킷을 읽어서 처리한다.
 
-[**추가적인 클라이언트 참조 자료는 여기로**]()
+<!-- [**추가적인 클라이언트 참조 자료는 여기로**](https://github.com/Theta08/RpgProject) -->
 
-[**Unity 코드 참조**]()
+[**Unity 코드 참조**](https://github.com/Theta08/RpgProject)
 
 ### 구현 및 기능
 
 ---
 
-1. [**네트워크 라이브러리 구현및 중요기능(CoreLib)**](</posts/온라인게임-포트폴리오-1>)  
-2. [**게임서버 구현및 중요기능(GameServer)**](</posts/온라인게임-포트폴리오-2>)  
-3. [**피격판정 기능(GameEngine)**](</posts/온라인게임-포트폴리오-3>)  
-4. [**클라이언트 통신(Unity)**](</posts/온라인게임-포트폴리오-4>)  
+1. [**프로젝트 소개**](/posts/OnlineGameportfolio-0)
+2. [**네트워크 라이브러리 구현및 중요기능(CoreLib)**](/posts/OnlineGameportfolio-1)
+3. [**게임서버 구현및 중요기능(GameServer)**](/posts/OnlineGameportfolio-2)
+4. [**피격판정 기능(GameEngine)**](/posts/OnlineGameportfolio-3)
+5. [**클라이언트 통신(Unity)**](/posts/OnlineGameportfolio-4)

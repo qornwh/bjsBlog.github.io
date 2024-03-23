@@ -7,9 +7,11 @@ tags: [온라인게임 개발기록, epoll, unreal, server, c++]
 ---
 
 # Epoll을 이용한 소켓 통신
+
 ---
 
 ## 서버에서의 소켓 설정
+
 ---
 
 온라인 게임서버에서의 통신은 실시간으로 이뤄져야 된다. 실시간으로 통신할려고 하면 Socket을 non-block으로 설정하고, epoll의 수신데이터가 버퍼에 쌓이면 한번만 감지 해서 알려주면 되기 때문에 '에지 트리거' 모드로 설정할 필요가 있다.
@@ -53,6 +55,7 @@ bool EpollFD::Register(int socketFd)
 위 함수는 소켓에 epoll 모드로 설정하는 코드이다. epoll_event로 \_epollFd에 설정후에 epoll_ctl 함수로 소켓을 등록하는 코드이다.
 
 ## 서버 클라이언트 통신
+
 ---
 
 **서버의 전체적인 통신 과정이다.**
@@ -65,6 +68,7 @@ bool EpollFD::Register(int socketFd)
 6. Service, Session, Job등 동적할당으로 객체를 생성은 std::shared_ptr로 작성됨.
 
 ### 서버 소켓 감지
+
 ---
 
 서버에서는 소켓을 epoll_wait함수로 connect, read, disconnect를 감지하게된다. epoll_wait함수로 select모델과 달리 감지가 일어나게된 소켓들만 fd를 가져올수 있게된다.
@@ -76,6 +80,7 @@ epoll_wait(_epollFd, _epollEvents, MAX_CLIENT, TIMEOUT); // _epollEvents 2번째
 현재 서버에서는 <[Dispatch()](https://github.com/qornwh/BSGameServer/blob/6cc18c87e9192adb951f1a2c0836b0ee7ca4180d/CoreLib/Service.cpp#L86)> 함수를 이용해서 매시간 epoll_wait을 호출하고 있다.
 
 ### lock 구현
+
 ---
 
 read write lock을 구현하기위해 read write을 제공하는 pthread_rwlock_init을 사용하여 구현. pthread_rwlock_tryrdlock, pthread_rwlock_trywrlock으로 lock 체크후에 write read로 lock 한뒤 unlock으로 구현. 추가로 일정 이상 lock 흭득을 못하면 다른 스레드에게 넘기는 방법으로 구현.
@@ -122,6 +127,7 @@ private:
 ```
 
 ### JobQueue 구성
+
 ---
 
 JobQueue은 멀티스레드 환경에서 contextSwitch되면 공유자원을 침범하는 하게 된다. 이를 방어하기 위해서. JobQueue는 push, execute될때 Lock을 사용해 생성자소비자 패턴처럼 작성되어 있다. 나중에 나올 Room(JobQueue상속)에서 사용된다.
@@ -168,9 +174,12 @@ private:
 [**네트워크 라이브러리 코드 CoreLib폴더 참조**](https://github.com/qornwh/BSGameServer/tree/main/CoreLib)
 
 ## 게임 서비스 제작및 구현
+
 ---
 
-1. [**Epoll을 이용한 소켓 통신**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-1>)
-2. [**게임 패킷 구현 및 멀티 스레드**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-2>)
-3. [**게임 기능 구현**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-3>)
-4. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-4>)
+1. [**프로젝트 소개**](/posts/OnlineGame-EpollServer-0)
+2. [**Epoll을 이용한 소켓 통신**](/posts/OnlineGame-EpollServer-1)
+3. [**게임 패킷 구현 및 멀티 스레드**](/posts/OnlineGame-EpollServer-2)
+4. [**게임 기능 구현**](/posts/OnlineGame-EpollServer-3)
+5. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](/posts/OnlineGame-EpollServer-4)
+6. [**vscode 설정, makefile**](/posts/OnlineGame-EpollServer-5)

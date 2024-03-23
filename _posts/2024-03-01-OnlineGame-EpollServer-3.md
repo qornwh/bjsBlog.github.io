@@ -405,7 +405,9 @@ static float calculateAngle(float x1, float y1, float x2, float y2)
 
 ---
 
-1. [**Epoll을 이용한 소켓 통신**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-1>)
-2. [**게임 패킷 구현 및 멀티 스레드**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-2>)
-3. [**게임 기능 구현**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-3>)
-4. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](</posts/온라인게임-개발기록(Epoll,-UnrealEngine)-4>)
+1. [**프로젝트 소개**](/posts/OnlineGame-EpollServer-0)
+2. [**Epoll을 이용한 소켓 통신**](/posts/OnlineGame-EpollServer-1)
+3. [**게임 패킷 구현 및 멀티 스레드**](/posts/OnlineGame-EpollServer-2)
+4. [**게임 기능 구현**](/posts/OnlineGame-EpollServer-3)
+5. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](/posts/OnlineGame-EpollServer-4)
+6. [**vscode 설정, makefile**](/posts/OnlineGame-EpollServer-5)

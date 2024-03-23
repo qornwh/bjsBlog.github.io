@@ -7,9 +7,11 @@ tags: [온라인게임 개발기록, boost, Unity, googleProtobuf, server, c++]
 ---
 
 # 네트워크 라이브러리 구현및 중요기능(CoreLib)
+
 ---
 
 ## 네트워크 라이브러리 목차
+
 ---
 
 - 서버 Serivce, 클라이언트 Session 구현(boost::asio)
@@ -17,6 +19,7 @@ tags: [온라인게임 개발기록, boost, Unity, googleProtobuf, server, c++]
 - thread, type 지정
 
 ### 서버 Serivce, 클라이언트 Session 구현(boost::asio)
+
 ---
 
 먼저 boost::asio를 이용하고 tcp에 non-blocking으로 서버를 구현.
@@ -27,9 +30,10 @@ tags: [온라인게임 개발기록, boost, Unity, googleProtobuf, server, c++]
 _SeviceSession_
 먼저 `Service`에서 `Session`을 생성하고 boost::asio의 `acceptor.async_accept`으로 먼저 `accept`를 등록한다. 그다음 클라이언트와 `Connect`이 read write가 가능하고. unity에서 packet을 send하면 `Session`에서 패킷을 분석한뒤에 `BroadCast`모든 `Session`에 필요한 패킷을 전달하게 된다.
 
-마지막으로 `lock`은 `mutex`를 사용해서 구현. `CAS`로 스핀락이나 `InterlockedAdd`으로 구현할수 있지만, 사실 이부분은 확신이 없어서 그냥 기본 `mutex`를 이용해서 구현. `lock` 사용은 `ReadLockGard`, `WriteLockGard`로 사용되는데 c++에서 존재한 [`RAII`](https://en.cppreference.com/w/cpp/language/raii)패턴을 이용해서 구현. 
- 
+마지막으로 `lock`은 `mutex`를 사용해서 구현. `CAS`로 스핀락이나 `InterlockedAdd`으로 구현할수 있지만, 사실 이부분은 확신이 없어서 그냥 기본 `mutex`를 이용해서 구현. `lock` 사용은 `ReadLockGard`, `WriteLockGard`로 사용되는데 c++에서 존재한 [`RAII`](https://en.cppreference.com/w/cpp/language/raii)패턴을 이용해서 구현.
+
 ### recv, send buffer를 구현
+
 ---
 
 `RecvBuffer`는 Tcp프로토콜이 데이터가 한번에 들어오는게 아니라 쪼개저서 들어올수 있으므로 사용했다. Packet은 나중에 나오지만 Packet을 구성하는데 제일 앞에 packetId, packetSize순서대로 들어오기 때문에, 데이터가 들어올때 packetSize를 체크해서 size만큼 들어오지 않으면 ReadBuffer에 킵 해두었다가 다시 데이터가 들어와서 ReadBuffer를 비우는 형식으로 구현.  
@@ -40,10 +44,12 @@ _ReadBuffer_
 
 `SendBuffer`는 3가지의 클래스로 관리된다. `SendBuffer`클래스는 버퍼가 얼마만큼 할당받고 쓰여지는지 이용되고, `SendBufferChunk`클래스는 `SendBuffer`를 할당해주고 실제로 버퍼를(4096) 들고 있다. 마지막으로 `SendBufferChunk`를 관리하는 `SendBufferManager`가 `TSL`가 관리하는 `SendBufferChunk`를 리스트로 들고 있어서 `SendBufferChunk`를 할당해주는 역할이고, `SendBufferChunk`가 가르키는 포인터가 사라질때 다시 `TSL`가 관리하는 `SendBufferChunk`에 push되는 방식이다.  
 정책은 다음과 같다.
+
 1. 초기 프로그램 실행될때 미리 `SendBufferManager`는 `SendBufferChunk` 일정 개수만큼 생성한다.
 2. `SendBufferChunk`는 풀링으로 관리되면 할당될때 `TLS_SendbufferChunk`에 남은게 있으면 pop으로 가져오고, 없으면 동적할당된다. `SendBufferChunk`가 사용되고 가르키는 포인터가 없으면 할당해제되는게 아니라 다시 `TLS_SendbufferChunk`에 들어가게 된다.
 
 `SendBufferChunk`를 할당받는 코드는 다음과 같다.
+
 ```cpp
 SendBufferRef SendBufferManager::Open(uint32 size)
 {
@@ -82,9 +88,11 @@ SendBufferChunkRef SendBufferManager::CreateChunk() const
 ```
 
 ### thread, type 지정
+
 ---
 
 `Thread`는 `ThreadManager`에서 생성한다. TLS로 thread id, Sendbuffer를 풀링하기 위한 변수 2개가 있고. `boost::asio::thread_pool`을 사용했다. 아래는 스레드 생성시 사용되는 함수이다.
+
 ```cpp
 // 스레드 생성
 void ThreadManager::CreateThread(function<void()> callback)
@@ -101,12 +109,13 @@ void ThreadManager::CreateThread(function<void()> callback)
 void ThreadManager::ThreadJoinAll()
 {
     _threadPool.join();
-} 
+}
 
 boost::asio::thread_pool _threadPool;
 ```
 
 `Type`은 `Types.h`에 선언되어 있다. boost의 자료형을 사용했고, `atomic`만 template으로 모든 타입을 받을수 있게 구현. 스마트 포인터는 모두 boost::shared_ptr, boost::weak_ptr을 사용했다.
+
 ```cpp
 using BYTE = boost::uint8_t;
 using int8 = boost::int8_t;
@@ -127,9 +136,11 @@ using SessionRef = boost::shared_ptr<class Session>;
 [**CoreLib 코드 참조**](https://github.com/qornwh/GameServerProject/tree/main/CoreLib)
 
 ### 구현 및 기능
+
 ---
 
-1. [**네트워크 라이브러리 구현및 중요기능(CoreLib)**](</posts/온라인게임-포트폴리오-1>)  
-2. [**게임서버 구현및 중요기능(GameServer)**](</posts/온라인게임-포트폴리오-2>)  
-3. [**피격판정 기능(GameEngine)**](</posts/온라인게임-포트폴리오-3>)  
-4. [**클라이언트 통신(Unity)**](</posts/온라인게임-포트폴리오-4>)  
+1. [**프로젝트 소개**](/posts/OnlineGameportfolio-0)
+2. [**네트워크 라이브러리 구현및 중요기능(CoreLib)**](/posts/OnlineGameportfolio-1)
+3. [**게임서버 구현및 중요기능(GameServer)**](/posts/OnlineGameportfolio-2)
+4. [**피격판정 기능(GameEngine)**](/posts/OnlineGameportfolio-3)
+5. [**클라이언트 통신(Unity)**](/posts/OnlineGameportfolio-4)
