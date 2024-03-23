@@ -137,7 +137,7 @@ public static byte[] MakeHeaderPacketHandler(UInt16 pktId, UInt16 pktSize)
 
 `SocketComponent`는 `Scene`에 들어있다. 그래서 매 틱마다 한번씩 업데이트되며 그때 패킷을 저장해놓은 큐가 비어있지 않으면 pop한뒤 switch-case로 id별로 패킷을 읽어서 처리한다.
 
-<!-- [**추가적인 클라이언트 참조 자료는 여기로**](https://github.com/Theta08/RpgProject) -->
+[**추가적인 클라이언트 참조 자료는 여기로**](https://theta08.github.io/)
 
 [**Unity 코드 참조**](https://github.com/Theta08/RpgProject)
 
