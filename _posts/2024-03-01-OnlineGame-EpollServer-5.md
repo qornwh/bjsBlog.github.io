@@ -119,9 +119,9 @@ makefile 사용이유는 에디터가아닌 실행파일로 빌드하기 위해�
 
 ---
 
-1. [**프로젝트 소개**](/posts/OnlineGame-EpollServer-0)
-2. [**Epoll을 이용한 소켓 통신**](/posts/OnlineGame-EpollServer-1)
-3. [**게임 패킷 구현 및 멀티 스레드**](/posts/OnlineGame-EpollServer-2)
-4. [**게임 기능 구현**](/posts/OnlineGame-EpollServer-3)
-5. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](/posts/OnlineGame-EpollServer-4)
-6. [**vscode 설정, makefile**](/posts/OnlineGame-EpollServer-5)
+1. [**프로젝트 소개**](/bjsBlog.github.io/bjsBlog.github.io/posts/OnlineGame-EpollServer-0)
+2. [**Epoll을 이용한 소켓 통신**](/bjsBlog.github.io/posts/OnlineGame-EpollServer-1)
+3. [**게임 패킷 구현 및 멀티 스레드**](/bjsBlog.github.io/posts/OnlineGame-EpollServer-2)
+4. [**게임 기능 구현**](/bjsBlog.github.io/posts/OnlineGame-EpollServer-3)
+5. [**언리얼 엔진에서의 소켓 통신및 플레이 영상**](/bjsBlog.github.io/posts/OnlineGame-EpollServer-4)
+6. [**vscode 설정, makefile**](/bjsBlog.github.io/posts/OnlineGame-EpollServer-5)

@@ -139,8 +139,8 @@ using SessionRef = boost::shared_ptr<class Session>;
 
 ---
 
-1. [**프로젝트 소개**](/posts/OnlineGameportfolio-0)
-2. [**네트워크 라이브러리 구현및 중요기능(CoreLib)**](/posts/OnlineGameportfolio-1)
-3. [**게임서버 구현및 중요기능(GameServer)**](/posts/OnlineGameportfolio-2)
-4. [**피격판정 기능(GameEngine)**](/posts/OnlineGameportfolio-3)
-5. [**클라이언트 통신(Unity)**](/posts/OnlineGameportfolio-4)
+1. [**프로젝트 소개**](/bjsBlog.github.io/posts/OnlineGameportfolio-0)
+2. [**네트워크 라이브러리 구현및 중요기능(CoreLib)**](/bjsBlog.github.io/posts/OnlineGameportfolio-1)
+3. [**게임서버 구현및 중요기능(GameServer)**](/bjsBlog.github.io/posts/OnlineGameportfolio-2)
+4. [**피격판정 기능(GameEngine)**](/bjsBlog.github.io/posts/OnlineGameportfolio-3)
+5. [**클라이언트 통신(Unity)**](/bjsBlog.github.io/posts/OnlineGameportfolio-4)
