@@ -23,7 +23,14 @@ tags: [온라인게임 개발기록, boost, Unity, googleProtobuf, server, c++]
   - 클라이언트 : 윈도우 11
   - unity(v2021.3)
 
-### 시연 영상
+### 플레이 시연 영상
+
+---
+
+<iframe width="600" height="400" src="https://www.youtube.com/embed/UeYY-_UfRoY" title="rpg 궁수" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="600" height="400" src="https://www.youtube.com/embed/bkWg1QWX7Vs" title="rpg 전사" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### 테스트 시연 영상
 
 ---
 
